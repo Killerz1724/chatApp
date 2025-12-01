@@ -1,5 +1,11 @@
+import Chats from "@/components/ChatComp/Chats";
+import Layout from "@/components/Layout";
 import React from "react";
 
 export default function Dashboard() {
-  return <section className="bg-slate-500 w-full">Dashboard</section>;
+  return (
+    <Layout>
+      <Chats />
+    </Layout>
+  );
 }
