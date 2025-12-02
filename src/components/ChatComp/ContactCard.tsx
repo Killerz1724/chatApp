@@ -15,7 +15,7 @@ export default function ContactCard({
   return (
     <div
       className={clsx(
-        "flex gap-6 items-center bg-gray-100 px-4 py-2 rounded-2xl w-full",
+        "flex gap-6 items-center bg-gray-200 px-4 py-2 rounded-2xl w-full",
         "hover:bg-blue-300 hover:text-white hover:cursor-pointer   transition-all duration-200"
       )}
     >
