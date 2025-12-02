@@ -6,12 +6,12 @@ export const users = [
   },
   {
     id: "u2",
-    name: "John Parker",
+    name: "Izzaz gooner",
     avatar: "https://i.pravatar.cc/150?img=5",
   },
   {
     id: "u3",
-    name: "Mika Chen",
+    name: "Paat pdf",
     avatar: "https://i.pravatar.cc/150?img=10",
   },
 ];
