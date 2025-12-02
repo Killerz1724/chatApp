@@ -1,3 +1,8 @@
+@import "@fontsource/plus-jakarta-sans/latin.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  font-family: "Plus Jakarta Sans", sans-serif;
+}

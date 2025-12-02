@@ -6,6 +6,9 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      jakartaSans: ["Plus Jakarta Sans", "sans-serif"],
+    },
   },
   plugins: [],
 };
