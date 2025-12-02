@@ -13,7 +13,10 @@ export default function SearchBar() {
         id="search-contact"
         placeholder="Search"
         type="text"
-        className={clsx("opacity-50 text-sm outline-none", "focus:opacity-100")}
+        className={clsx(
+          "opacity-50 text-sm outline-none bg-transparent",
+          "focus:opacity-100"
+        )}
       />
     </div>
   );
