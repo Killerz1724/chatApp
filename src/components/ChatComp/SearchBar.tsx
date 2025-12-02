@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { Search } from "lucide-react";
 import React from "react";
 
 export default function SearchBar() {
@@ -9,6 +10,7 @@ export default function SearchBar() {
         " focus-within:border-blue-400 transition-all duration-200"
       )}
     >
+      <Search className="text-gray-400" />
       <input
         id="search-contact"
         placeholder="Search"
