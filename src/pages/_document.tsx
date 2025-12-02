@@ -5,7 +5,7 @@ export default function Document() {
     <Html lang="en">
       <Head />
       <body>
-        <main className="px-[20rem] py-[5rem] bg-gray-300 h-screen">
+        <main className="flex justify-center items-center bg-gray-300 h-screen">
           <Main />
         </main>
 
