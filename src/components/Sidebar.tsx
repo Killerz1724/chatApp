@@ -1,19 +1,23 @@
 import clsx from "clsx";
 import { Contact, MessageSquareText } from "lucide-react";
-import React from "react";
+import { usePathname } from "next/navigation";
 
 const sideBarItem = [
   {
     name: "Contact",
     icon: Contact,
+    path: "/contacts",
   },
   {
     name: "Message",
     icon: MessageSquareText,
+    path: "/conversations",
   },
 ];
 
 export default function Sidebar() {
+  const path = `/${usePathname().split("/").at(1)}`;
+
   return (
     <div id="sidebar" className="px-2 py-4 flex">
       <aside className="px-2 py-8 bg-slate-800 text-white rounded-2xl h-full flex-1">
@@ -23,7 +27,8 @@ export default function Sidebar() {
               key={index}
               className={clsx(
                 "flex gap-4 items-center text-slate-400 p-2 rounded-md",
-                "hover:text-white hover:bg-blue-300 hover:cursor-pointer transition-all duration-200"
+                "hover:text-white hover:bg-blue-300 hover:cursor-pointer transition-all duration-200",
+                path === `${item.path}` && "bg-blue-300 text-white"
               )}
             >
               <item.icon />

@@ -23,6 +23,7 @@ export default function ChatLists() {
             return (
               <li key={user.id}>
                 <ContactCard
+                  id={user.id}
                   name={user.name}
                   avatar={user.avatar}
                   text={lastMesage?.text}
