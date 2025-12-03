@@ -27,6 +27,7 @@ export default function ChatLists() {
                   name={user.name}
                   avatar={user.avatar}
                   text={lastMesage?.text}
+                  isConv
                 />
               </li>
             );

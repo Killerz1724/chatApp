@@ -16,7 +16,8 @@ const sideBarItem = [
 ];
 
 export default function Sidebar() {
-  const path = `/${useRouter().pathname.split("/").at(1)}`;
+  const router = useRouter();
+  const path = `/${router.pathname.split("/").at(1)}`;
 
   return (
     <div id="sidebar" className="px-2 py-4 flex">
@@ -30,6 +31,11 @@ export default function Sidebar() {
                 "hover:text-white hover:bg-blue-300 hover:cursor-pointer transition-all duration-200",
                 path === `${item.path}` && "bg-blue-300 text-white"
               )}
+              onClick={() => {
+                if (path !== `${item.path}`) {
+                  router.push(item.path);
+                }
+              }}
             >
               <item.icon />
             </li>

@@ -7,6 +7,7 @@ type contactCardType = {
   name: string;
   avatar: string;
   text?: string;
+  isConv?: boolean;
 };
 
 export default function ContactCard({
@@ -14,6 +15,7 @@ export default function ContactCard({
   name,
   avatar,
   text = "",
+  isConv,
 }: contactCardType) {
   const route = useRouter();
   const path = route.asPath.split("/").at(-1);
@@ -31,8 +33,9 @@ export default function ContactCard({
       </div>
       <div className="space-y-2 w-full">
         <h4 className="text-sm font-semibold">{name}</h4>
+
         <p className="text-xs group-hover:text-white group-hover:opacity-100 opacity-50 transition-all duration-200">
-          {text}
+          {isConv ? text : null}
         </p>
       </div>
     </div>
