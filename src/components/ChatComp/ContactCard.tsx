@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 type contactCardType = {
   id: string;
@@ -16,11 +16,13 @@ export default function ContactCard({
   text = "",
 }: contactCardType) {
   const route = useRouter();
+  const path = usePathname().split("/").at(-1);
   return (
     <div
       className={clsx(
         "flex gap-6 items-center bg-gray-200 px-4 py-2 rounded-2xl w-full group",
-        "hover:bg-blue-300 hover:text-white  hover:cursor-pointer   transition-all duration-200"
+        "hover:bg-blue-300 hover:text-white  hover:cursor-pointer   transition-all duration-200",
+        path === id && "bg-blue-300 text-white"
       )}
       onClick={() => route.push(`/conversations/${id}`)}
     >
