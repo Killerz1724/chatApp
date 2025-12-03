@@ -16,18 +16,18 @@ export default function ContactCard({
   text = "",
 }: contactCardType) {
   const route = useRouter();
-  const path = useRouter().pathname.split("/").at(-1);
+  const path = route.asPath.split("/").at(-1);
   return (
     <div
       className={clsx(
+        path === id && "!bg-blue-300 text-white",
         "flex gap-6 items-center bg-gray-200 px-4 py-2 rounded-2xl w-full group",
-        "hover:bg-blue-300 hover:text-white  hover:cursor-pointer   transition-all duration-200",
-        path === id && "bg-blue-300 text-white"
+        "hover:bg-blue-300 hover:text-white  hover:cursor-pointer  transition-all duration-200"
       )}
       onClick={() => route.push(`/conversations/${id}`)}
     >
       <div className="w-8 h-8 rounded-full relative object-cover overflow-hidden">
-        <Image src={avatar} fill alt={`${name} profile picture`} />
+        <Image src={avatar} fill alt={`${name} profile picture`} sizes="100%" />
       </div>
       <div className="space-y-2 w-full">
         <h4 className="text-sm font-semibold">{name}</h4>

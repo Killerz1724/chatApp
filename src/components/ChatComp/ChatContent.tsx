@@ -9,7 +9,7 @@ export default function ChatContent({ id }: { id: string }) {
     val.participants.includes(id)
   )[0];
   return (
-    <article className="flex flex-col w-full">
+    <article className="flex flex-col w-full h-full">
       {!id ? (
         <div className="flex h-full w-full items-center justify-center">
           Click on a conversation
@@ -17,10 +17,10 @@ export default function ChatContent({ id }: { id: string }) {
       ) : (
         <>
           <RecepientProfile id={id} />
-          <div className="flex flex-col bg-blue-100 px-8 py-6 rounded-2xl h-full w-full">
+          <div className="flex gap-4 flex-col bg-blue-100 px-8 py-6 rounded-2xl h-full w-full">
             <div
               className={clsx(
-                "max-h-[20rem] pr-4  overflow-y-scroll flex-1",
+                "max-h-[20rem] pr-4  overflow-y-auto flex-1",
                 "scrollbar scrollbar-thumb-rounded-full scrollbar-corner-transparent scrollbar-thumb-sky-700 scrollbar-track-transparent"
               )}
             >
