@@ -11,6 +11,10 @@ export default function ChatBubble({
   createdAt: string;
   status: string;
 }) {
+  const date = new Date(createdAt).toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+  });
   return (
     <div
       className={clsx(
@@ -27,8 +31,8 @@ export default function ChatBubble({
       >
         <p className="text-sm font-semibold">{text}</p>
         <div className="flex gap-1 items-center justify-end">
+          <span className="text-xs opacity-50">{date}</span>
           <span className="text-xs opacity-50">{status}</span>
-          <span className="text-xs opacity-50">{createdAt}</span>
         </div>
       </div>
     </div>
