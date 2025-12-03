@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+import tailwindScrollbar from "tailwind-scrollbar";
 module.exports = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx}",
@@ -10,5 +11,5 @@ module.exports = {
       jakartaSans: ["Plus Jakarta Sans", "sans-serif"],
     },
   },
-  plugins: [],
+  plugins: [tailwindScrollbar],
 };

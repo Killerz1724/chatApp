@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 
 type contactCardType = {
   id: string;
@@ -16,7 +16,7 @@ export default function ContactCard({
   text = "",
 }: contactCardType) {
   const route = useRouter();
-  const path = usePathname().split("/").at(-1);
+  const path = useRouter().pathname.split("/").at(-1);
   return (
     <div
       className={clsx(

@@ -1,7 +1,13 @@
+import { conversations, currentUserId } from "@/constants/dummyData";
 import InputMessage from "./InputMessage";
 import RecepientProfile from "./RecepientProfile";
+import ChatBubble from "../ChatBubble";
+import clsx from "clsx";
 
 export default function ChatContent({ id }: { id: string }) {
+  const selectedConv = conversations.filter((val) =>
+    val.participants.includes(id)
+  )[0];
   return (
     <article className="flex flex-col w-full">
       {!id ? (
@@ -12,7 +18,24 @@ export default function ChatContent({ id }: { id: string }) {
         <>
           <RecepientProfile id={id} />
           <div className="flex flex-col bg-blue-100 px-8 py-6 rounded-2xl h-full w-full">
-            <div className="flex-1">Chat Content</div>
+            <div
+              className={clsx(
+                "max-h-[20rem] pr-4  overflow-y-scroll flex-1",
+                "scrollbar scrollbar-thumb-rounded-full scrollbar-corner-transparent scrollbar-thumb-sky-700 scrollbar-track-transparent"
+              )}
+            >
+              {selectedConv.messages.map((message, index) => (
+                <ChatBubble
+                  key={index}
+                  subject={
+                    message.senderId === currentUserId ? "sender" : "receiver"
+                  }
+                  text={message.text as string}
+                  createdAt={message.createdAt}
+                  status={message.status}
+                />
+              ))}
+            </div>
             <InputMessage />
           </div>
         </>

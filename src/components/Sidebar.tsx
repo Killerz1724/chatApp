@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { Contact, MessageSquareText } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { useRouter } from "next/router";
 
 const sideBarItem = [
   {
@@ -16,7 +16,7 @@ const sideBarItem = [
 ];
 
 export default function Sidebar() {
-  const path = `/${usePathname().split("/").at(1)}`;
+  const path = `/${useRouter().pathname.split("/").at(1)}`;
 
   return (
     <div id="sidebar" className="px-2 py-4 flex">
