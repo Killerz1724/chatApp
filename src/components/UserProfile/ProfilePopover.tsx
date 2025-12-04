@@ -13,7 +13,7 @@ export default function ProfilePopover() {
         <ul className="space-y-4 text-sm">
           <li
             className={clsx(
-              "font-semibold",
+              "font-semibold text-white",
               "hover:cursor-pointer hover:text-blue-400"
             )}
           >

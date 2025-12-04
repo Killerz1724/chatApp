@@ -29,8 +29,8 @@ function PopoverContent({
         align={align}
         sideOffset={sideOffset}
         className={clsx(
-          "z-50 max-w-32 rounded-md border p-4 shadow-md outline-hidden",
-          "bg-slate-100",
+          "z-50 max-w-32 rounded-md  p-4 shadow-md outline-hidden",
+          "bg-slate-700",
           className
         )}
         {...props}
