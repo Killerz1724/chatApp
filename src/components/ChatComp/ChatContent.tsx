@@ -3,11 +3,21 @@ import InputMessage from "./InputMessage";
 import RecepientProfile from "./RecepientProfile";
 import ChatBubble from "../ChatBubble";
 import clsx from "clsx";
+import { useEffect, useRef } from "react";
 
 export default function ChatContent({ id }: { id: string }) {
   const selectedConv = conversations.filter((val) =>
     val.participants.includes(id)
   )[0];
+
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const scrollToBottom = () => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+  useEffect(() => {
+    scrollToBottom();
+  }, [id]);
+
   return (
     <article className="flex flex-col w-full h-full">
       {!id ? (
@@ -35,6 +45,7 @@ export default function ChatContent({ id }: { id: string }) {
                   status={message.status}
                 />
               ))}
+              <div ref={bottomRef} />
             </div>
             <InputMessage />
           </div>
