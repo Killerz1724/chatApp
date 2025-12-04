@@ -1,8 +1,8 @@
-import LoginForm from "@/components/LoginComp/LoginForm";
+import RegisterForm from "@/components/RegComp/RegisterForm";
 import Link from "next/link";
 import React from "react";
 
-export default function LoginPage() {
+export default function index() {
   return (
     <section className="flex flex-col gap-8 items-center min-w-[30rem] bg-slate-50 rounded-xl px-24 py-12 shadow-lg">
       <div className="space-y-2">
@@ -10,15 +10,15 @@ export default function LoginPage() {
           Welcome to <span className="text-blue-400">Chatty</span>
         </h2>
         <p className="text-center text-sm font-semibold">
-          Sign In to your chat world!
+          Sign Up to access your chat world!
         </p>
       </div>
       <div className="space-y-2">
-        <LoginForm />
+        <RegisterForm />
         <p className="text-xs">
-          Doesn&apos;t have an account?{" "}
-          <Link className="text-blue-400 text-sm " href={"/register"}>
-            Register Here!
+          Already have an account?{" "}
+          <Link className="text-blue-400 text-sm " href={"/login"}>
+            Login Here!
           </Link>
         </p>
       </div>

@@ -10,7 +10,7 @@ export default function Input({ label, ...props }: InputType) {
       <label className="text-sm font-semibold" htmlFor={props.id}>
         {label}
       </label>{" "}
-      <input className="text-sm border rounded-lg px-4 py-2" {...props} />
+      <input className="text-xs border rounded-lg px-4 py-2" {...props} />
     </div>
   );
 }
