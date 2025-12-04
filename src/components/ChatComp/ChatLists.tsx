@@ -2,7 +2,7 @@ import { conversations, currentUserId, users } from "@/constants/dummyData";
 import ContactCard from "./ContactCard";
 import SearchBar from "./SearchBar";
 
-export default function ChatLists() {
+export default function ChatLists({ isConv }: { isConv?: boolean }) {
   const userConv = conversations.filter((conv) =>
     conv.participants.includes(currentUserId)
   );
@@ -27,7 +27,7 @@ export default function ChatLists() {
                   name={user.name}
                   avatar={user.avatar}
                   text={lastMesage?.text}
-                  isConv
+                  isConv={isConv}
                 />
               </li>
             );

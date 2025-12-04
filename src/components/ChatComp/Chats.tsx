@@ -5,7 +5,7 @@ import ChatContent from "./ChatContent";
 export default function Chats({ id }: { id: string }) {
   return (
     <>
-      <ChatLists />
+      <ChatLists isConv />
       <ChatContent id={id} />
     </>
   );
