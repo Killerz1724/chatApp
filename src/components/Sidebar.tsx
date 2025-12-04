@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { Contact, MessageSquareText } from "lucide-react";
 import { useRouter } from "next/router";
+import ProfilePopover from "./UserProfile/ProfilePopover";
 
 const sideBarItem = [
   {
@@ -21,7 +22,7 @@ export default function Sidebar() {
 
   return (
     <div id="sidebar" className="px-2 py-4 flex">
-      <aside className="px-2 py-8 bg-slate-800 text-white rounded-2xl h-full flex-1">
+      <aside className="flex flex-col items-center justify-between px-2 py-8 bg-slate-800 text-white rounded-2xl h-full flex-1">
         <ul className="flex flex-col justify-center gap-8">
           {sideBarItem.map((item, index) => (
             <li
@@ -41,6 +42,7 @@ export default function Sidebar() {
             </li>
           ))}
         </ul>
+        <ProfilePopover />
       </aside>
     </div>
   );
