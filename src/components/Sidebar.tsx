@@ -2,6 +2,7 @@ import clsx from "clsx";
 import { Contact, MessageSquareText } from "lucide-react";
 import { useRouter } from "next/router";
 import ProfilePopover from "./UserProfile/ProfilePopover";
+import { currentUserId } from "@/constants/dummyData";
 
 const sideBarItem = [
   {
@@ -42,7 +43,7 @@ export default function Sidebar() {
             </li>
           ))}
         </ul>
-        <ProfilePopover />
+        <ProfilePopover id={currentUserId} />
       </aside>
     </div>
   );

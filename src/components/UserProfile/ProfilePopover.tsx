@@ -2,8 +2,9 @@ import React from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../LibComp/Popover";
 import SidebarProfile from "./SidebarProfile";
 import clsx from "clsx";
+import ProfileDialog from "./ProfileDialog";
 
-export default function ProfilePopover() {
+export default function ProfilePopover({ id }: { id: string }) {
   return (
     <Popover>
       <PopoverTrigger>
@@ -17,7 +18,7 @@ export default function ProfilePopover() {
               "hover:cursor-pointer hover:text-blue-400"
             )}
           >
-            See Profile
+            <ProfileDialog id={id}>See Profile</ProfileDialog>
           </li>
           <li
             className={clsx(
