@@ -1,6 +1,7 @@
 import { users } from "@/constants/dummyData";
 import Image from "next/image";
 import React from "react";
+import Button from "../Button";
 
 export default function ContactContent({ id }: { id?: string }) {
   const selectedUser = users.find((user) => user.id === id);
@@ -20,6 +21,7 @@ export default function ContactContent({ id }: { id?: string }) {
             />
           </div>
           <h4 className="font-bold text-lg">{selectedUser?.id}</h4>
+          <Button>+ Add as contact</Button>
         </div>
       ) : (
         <h4>Click on a contact</h4>
