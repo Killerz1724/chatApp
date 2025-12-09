@@ -2,6 +2,7 @@ package main
 
 import (
 	"chatApp/database"
+	"chatApp/middleware"
 	"log"
 	"net/http"
 	"os"
@@ -20,6 +21,8 @@ func main() {
 
 	r := gin.New()
 	r.ContextWithFallback = true
+	r.Use(middleware.Logger())
+	r.Use(middleware.ErrorMiddleware())
 
 	srv := &http.Server{
 		Addr:    ":" + os.Getenv("SERVER_PORT"),
