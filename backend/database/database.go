@@ -4,14 +4,15 @@ import (
 	"database/sql"
 	"flag"
 	"log"
+	"os"
 
 	_ "github.com/jackc/pgx/v5/stdlib"
 )
 
 
 func InitializeDatabase() (*sql.DB,error) {
-	// seed := flag.Bool("seed", false, "seed the database")
-	// down := flag.Bool("down", false, "drop the database")
+	seed := flag.Bool("seed", false, "seed the database")
+	down := flag.Bool("down", false, "drop the database")
 	flag.Parse()
 	url := ServerConfig()
 
@@ -28,36 +29,36 @@ func InitializeDatabase() (*sql.DB,error) {
 		return nil, err
 	}
 
-	// if *down {
-	// 	content, err := os.ReadFile("./database/databaseDown.sql")
+	if *down {
+		content, err := os.ReadFile("./database/seeds/down.sql")
 
-	// 	if err != nil {
-	// 		log.Fatalln("failed to read down seed file", err)
-	// 		return nil, err
-	// 	}
+		if err != nil {
+			log.Fatalln("failed to read down seed file", err)
+			return nil, err
+		}
 
-	// 	_, err = db.Exec(string(content))
+		_, err = db.Exec(string(content))
 
-	// 	if err != nil {
-	// 		log.Fatalln("failed to execute down seed file", err)
-	// 		return nil, err
-	// 	}
-	// }
+		if err != nil {
+			log.Fatalln("failed to execute down seed file", err)
+			return nil, err
+		}
+	}
 
-	// if *seed {
-	// 	content, err := os.ReadFile("./database/database.sql")
+	if *seed {
+		content, err := os.ReadFile("./database/seeds/up.sql")
 
-	// 	if err != nil {
-	// 		log.Fatalln("failed to read seed file", err)
-	// 		return nil, err
-	// 	}
+		if err != nil {
+			log.Fatalln("failed to read seed file", err)
+			return nil, err
+		}
 
-	// 	_, err = db.Exec(string(content))
+		_, err = db.Exec(string(content))
 
-	// 	if err != nil {
-	// 		log.Fatalln("failed to execute seed file", err)
-	// 		return nil, err
-	// 	}
-	// }
+		if err != nil {
+			log.Fatalln("failed to execute seed file", err)
+			return nil, err
+		}
+	}
 	return db, nil
 }
