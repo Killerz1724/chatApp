@@ -55,3 +55,34 @@ CREATE TABLE messages(
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP
 );
+
+INSERT INTO users(email, password, username, tag)
+VALUES 
+  ('user1@mail.com', '$2a$12$EAHF4JtPe/HKq6azH6Q9gedPfH50B2/qwDUEqSAT3nDl0OHeifPCC', 'user1', '#1111'),
+  ('user2@mail.com', '$2a$12$EAHF4JtPe/HKq6azH6Q9gedPfH50B2/qwDUEqSAT3nDl0OHeifPCC', 'user2', '#2222'),
+  ('user3@mail.com', '$2a$12$EAHF4JtPe/HKq6azH6Q9gedPfH50B2/qwDUEqSAT3nDl0OHeifPCC', 'user3', '#3333');
+
+INSERT INTO friends(user_id, friend_id)
+VALUES
+  (1, 2),
+  (2, 3);
+
+INSERT INTO conversations(name, is_group)
+VALUES
+  ('', true),
+  ('group2', true);
+
+INSERT INTO conversationsMembers(conversation_id, user_id)
+VALUES
+  (1, 1),
+  (1, 2),
+  (2, 1),
+  (2, 2),
+  (2, 3);
+
+INSERT INTO messages(sender_id, conversation_id, content)
+VALUES
+  (1, 1, 'hello'),
+  (2, 1, 'world'),
+  (1, 2, 'hello'),
+  (2, 2, 'world');
