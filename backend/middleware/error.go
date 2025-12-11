@@ -3,7 +3,7 @@ package middleware
 import (
 	"chatApp/constant"
 	"chatApp/dto"
-	"chatApp/entities"
+	"chatApp/entity"
 	"errors"
 	"net/http"
 
@@ -15,19 +15,19 @@ func ErrorMiddleware() gin.HandlerFunc {
 		c.Next()
 
 		if len(c.Errors) < 1 {
-			return 
+			return
 		}
 
 		err := c.Errors[0]
 
-		var cerr *entities.CustomError
+		var cerr *entity.CustomError
 
 		if errors.As(err, &cerr) {
 			c.Error(cerr.Log).SetType(gin.ErrorTypePrivate)
 
 			switch {
-			case errors.As(cerr.Msg, &constant.CustomErrorType{}) :
-				c.AbortWithStatusJSON(http.StatusInternalServerError, dto.Response{
+			case errors.As(cerr.Msg, &constant.LoginErrorType{}):
+				c.AbortWithStatusJSON(http.StatusBadRequest, dto.Response{
 					Success: false,
 					Error: &dto.ErrorResponse{
 						Message: cerr.Error(),
@@ -37,6 +37,9 @@ func ErrorMiddleware() gin.HandlerFunc {
 				return
 			}
 
+			
+		}
+
 		c.AbortWithStatusJSON(http.StatusInternalServerError, dto.Response{
 			Success: false,
 			Error: &dto.ErrorResponse{
@@ -45,6 +48,5 @@ func ErrorMiddleware() gin.HandlerFunc {
 			Data: nil,
 		})
 	}
-}
 
 }

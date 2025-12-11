@@ -2,7 +2,10 @@ package main
 
 import (
 	"chatApp/database"
+	"chatApp/handler"
 	"chatApp/middleware"
+	"chatApp/repository"
+	"chatApp/usecase"
 	"log"
 	"net/http"
 	"os"
@@ -23,6 +26,15 @@ func main() {
 	r.ContextWithFallback = true
 	r.Use(middleware.Logger())
 	r.Use(middleware.ErrorMiddleware())
+
+	ar := repository.NewAuthRepo(db)
+	au := usecase.NewAuthUsecase(ar)
+	ah := handler.NewAuthHandler(au)
+
+	{
+		auth := r.Group("/api/auth")
+		auth.POST("/login", ah.HandlerLogin)
+	}
 
 	srv := &http.Server{
 		Addr:    ":" + os.Getenv("SERVER_PORT"),
