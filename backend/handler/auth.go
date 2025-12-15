@@ -43,3 +43,26 @@ func (ah AuthHandlerImpl) HandlerLogin(c *gin.Context) {
 		Data:    resBody,
 	})
 }
+
+func (ah AuthHandlerImpl)HandlerAuthRegister(c *gin.Context) {
+	var reqBody dto.RegisterBody
+	err := c.ShouldBindBodyWithJSON(&reqBody)
+
+	if err != nil {
+		c.Error(err).SetType(gin.ErrorTypePublic)
+		return
+	}
+	req := entity.RegisterBody{Email: reqBody.Email, Username: reqBody.Username, Password: reqBody.Password, Tag: ""}
+	err = ah.au.UsecaseAuthRegister(c, req)
+
+	if err != nil {
+		c.Error(err).SetType(gin.ErrorTypePublic)
+		return
+	}
+
+	c.JSON(http.StatusCreated, dto.Response{
+		Success: true,
+		Error:   nil,
+		Data:    nil,
+	})
+}

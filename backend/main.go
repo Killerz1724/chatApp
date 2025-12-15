@@ -34,6 +34,7 @@ func main() {
 	{
 		auth := r.Group("/api/auth")
 		auth.POST("/login", ah.HandlerLogin)
+		auth.POST("/register", ah.HandlerAuthRegister)
 	}
 
 	srv := &http.Server{

@@ -7,6 +7,7 @@ var (
 	ErrLoginNotFound = errors.New("email or password is incorrect")
 	ErrInvalidJWT = errors.New("invalid access")
 	ErrInvalidJWTSubject = errors.New("invalid subject")
+	ErrUserAlreadyExist = errors.New("user already exist")
 )
 
 type LoginErrorType struct {

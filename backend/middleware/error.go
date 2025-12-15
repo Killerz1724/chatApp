@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jackc/pgx/v5/pgconn"
 )
 
 func ErrorMiddleware() gin.HandlerFunc {
@@ -20,12 +21,28 @@ func ErrorMiddleware() gin.HandlerFunc {
 
 		err := c.Errors[0]
 
+	
+
+		var pgErr *pgconn.PgError
 		var cerr *entity.CustomError
 
 		if errors.As(err, &cerr) {
 			c.Error(cerr.Log).SetType(gin.ErrorTypePrivate)
 
 			switch {
+			case errors.As(cerr.Msg, &pgErr):
+				msg := ""
+				if pgErr.Code == "23505" {
+					msg = constant.ErrUserAlreadyExist.Error()
+				}
+				c.AbortWithStatusJSON(http.StatusBadRequest, dto.Response{
+					Success: false,
+					Error: &dto.ErrorResponse{
+						Message: msg,
+					},
+					Data: nil,
+				})
+				return
 			case errors.As(cerr.Msg, &constant.LoginErrorType{}):
 				c.AbortWithStatusJSON(http.StatusBadRequest, dto.Response{
 					Success: false,

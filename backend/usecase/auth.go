@@ -12,6 +12,7 @@ import (
 
 type AuthUsecaseItf interface {
 	UsecaseLoginRepo(context.Context, entity.LoginBody) (*entity.LoginRes, error)
+	UsecaseAuthRegister(context.Context, entity.RegisterBody) error
 }
 
 type AuthUsecaseImpl struct {
@@ -46,4 +47,32 @@ func (au AuthUsecaseImpl)UsecaseLoginRepo(c context.Context, req entity.LoginBod
 	return  &entity.LoginRes{
 		Token: token,
 	}, nil
+}
+
+func (ar AuthUsecaseImpl) UsecaseAuthRegister(c context.Context, req entity.RegisterBody) error {
+
+	hashedPass, err  := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
+
+	if err != nil {
+		return &entity.CustomError{Msg: constant.LoginErrorType{Msg: constant.ErrCommon.Error()}, Log: err}
+	}
+
+	req.Password = string(hashedPass)
+
+	tag, err := utils.GenerateTag()
+
+	if err != nil {
+		return &entity.CustomError{Msg: constant.LoginErrorType{Msg: constant.ErrCommon.Error()}, Log: err}
+	}
+
+	req.Tag = tag
+
+	err = ar.ar.RepoAuthRegister(c, req)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+
 }
