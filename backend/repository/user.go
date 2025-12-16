@@ -5,7 +5,6 @@ import (
 	"chatApp/entity"
 	"context"
 	"database/sql"
-	"fmt"
 )
 
 type UserRepoItf interface {
@@ -40,13 +39,32 @@ func (ur UserRepoImpl) RepoGetUserProfile(c context.Context, req entity.ReqUserP
 }
 
 func (ur UserRepoImpl) RepoGetUserFriends(c context.Context, req entity.ReqUserProfileBody) (*[]entity.ResUserFriend, error) {
-	params := []any{req.Email}
+	
+
+	var userId int8
+
+	row := ur.db.QueryRowContext(c, `
+		SELECT id
+		FROM users
+		WHERE email = $1;
+	`, req.Email)
+
+	err := row.Scan(&userId)
+
+	if err != nil {
+		return nil, &entity.CustomError{Msg: constant.ErrCommon, Log: err}
+	}
+
+	params := []any{userId}
 	q :=`
 		SELECT  u.username, u.tag, u.img
 		FROM users u
 		JOIN friends f
-		ON f.user_id = u.id
-		WHERE u.email = $1
+		ON (
+       (f.user_id = $1 AND f.friend_id = u.id)
+    	OR (f.friend_id = $1 AND f.user_id = u.id)
+  	)
+		WHERE f.deleted_at IS NULL;
 	`
 
 	if(req.SearchP != ""){
@@ -55,7 +73,7 @@ func (ur UserRepoImpl) RepoGetUserFriends(c context.Context, req entity.ReqUserP
 	}
 
 	q += ";"
-	fmt.Println(q, params)
+
 	rows, err := ur.db.QueryContext(c, q, params...)
 
 	if err != nil {
