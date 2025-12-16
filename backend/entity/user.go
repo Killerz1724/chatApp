@@ -10,3 +10,9 @@ type ResUserProfile struct {
 	Tag      string
 	Img      string
 }
+
+type ResUserFriend struct {
+	Username string
+	Tag      string
+	Img      string
+}

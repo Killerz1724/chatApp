@@ -37,3 +37,31 @@ func (uh UserHandlerImpl) HandlerGetUserProfile(c *gin.Context) {
 		Data:    resBody,
 	})
 }
+
+func (uh UserHandlerImpl) UsecaseGetUserFriends(c *gin.Context){
+	sub := c.GetString("subject")
+
+	reqBody := entity.ReqUserProfileBody{Email: sub}
+
+	res, err := uh.uu.UsecaseGetUserFriends(c, reqBody)
+
+	if err != nil {
+		c.Error(err).SetType(gin.ErrorTypePublic)
+		return
+	}
+	
+	var friendList []dto.ResUserFriendProf
+	for _,friend := range *res{
+		resBody := dto.ResUserFriendProf(friend)
+		friendList = append(friendList, resBody)
+	}
+	resBody := dto.ResUserFriend{
+		Friend_list: friendList,
+	}
+
+	c.JSON(http.StatusOK, dto.Response{
+		Success: true,
+		Error:   nil,
+		Data:    resBody,
+	})
+}

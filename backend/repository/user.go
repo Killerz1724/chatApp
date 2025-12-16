@@ -9,6 +9,7 @@ import (
 
 type UserRepoItf interface {
 	RepoGetUserProfile(context.Context,entity.ReqUserProfileBody) (*entity.ResUserProfile, error)
+	RepoGetUserFriends(context.Context, entity.ReqUserProfileBody) (*[]entity.ResUserFriend, error)
 }
 
 type UserRepoImpl struct {
@@ -35,4 +36,31 @@ func (ur UserRepoImpl) RepoGetUserProfile(c context.Context, req entity.ReqUserP
 	}
 	
 	return &user, nil
+}
+
+func (ur UserRepoImpl) RepoGetUserFriends(c context.Context, req entity.ReqUserProfileBody) (*[]entity.ResUserFriend, error) {
+
+	rows, err := ur.db.QueryContext(c, `
+		SELECT  u.username, u.tag, u.img
+		FROM users u
+		JOIN friends f
+		ON f.user_id = u.id
+		WHERE u.email = $1;
+	`, req.Email)
+
+	if err != nil {
+		return nil, &entity.CustomError{Msg: constant.ErrCommon, Log: err}
+	}
+
+	var users []entity.ResUserFriend
+	for rows.Next(){
+		var user entity.ResUserFriend
+		err := rows.Scan(&user.Username, &user.Tag, &user.Img)
+		if err != nil {
+			return nil, &entity.CustomError{Msg: constant.ErrCommon, Log: err}
+		}
+		users = append(users, user)
+	}
+
+	return &users, nil
 }

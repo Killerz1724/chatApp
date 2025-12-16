@@ -44,6 +44,7 @@ func main() {
 		user := r.Group("/api/user")
 		user.Use(middleware.AuthMiddleware())
 		user.GET("/me", uh.HandlerGetUserProfile)
+		user.GET("/friends", uh.UsecaseGetUserFriends)
 	}
 
 	srv := &http.Server{

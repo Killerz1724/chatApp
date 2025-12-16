@@ -7,7 +7,8 @@ import (
 )
 
 type UserUsecaseItf interface {
-	UsecaseGetUserProfile(c context.Context, req entity.ReqUserProfileBody) (*entity.ResUserProfile, error)
+	UsecaseGetUserProfile(context.Context, entity.ReqUserProfileBody) (*entity.ResUserProfile, error)
+	UsecaseGetUserFriends(context.Context, entity.ReqUserProfileBody) (*[]entity.ResUserFriend, error)
 }
 
 type UserUsecaseImpl struct {
@@ -21,6 +22,16 @@ func NewUserUsecase(ur repository.UserRepoItf) UserUsecaseImpl {
 func (uu UserUsecaseImpl) UsecaseGetUserProfile(c context.Context, req entity.ReqUserProfileBody) (*entity.ResUserProfile, error) {
 
 	res, err := uu.ur.RepoGetUserProfile(c, req)
+
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+func (uu UserUsecaseImpl) UsecaseGetUserFriends(c context.Context, req entity.ReqUserProfileBody) (*[]entity.ResUserFriend, error){
+
+	res, err := uu.ur.RepoGetUserFriends(c, req)
 
 	if err != nil {
 		return nil, err
