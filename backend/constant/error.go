@@ -9,6 +9,8 @@ var (
 	ErrInvalidJWTSubject = errors.New("invalid subject")
 	ErrUserAlreadyExist = errors.New("user already exist")
 	ErrTagAlreadyExist = errors.New("tag already exist")
+	ErrJWTTokenInvalid = errors.New("access invalid")
+	ErrJWTTokenExpired = errors.New("authorization expired")
 )
 
 type LoginErrorType struct {
@@ -19,10 +21,19 @@ type JwtErrorType struct {
 	Msg string
 }
 
+type TokenErrorType struct {
+	Msg string
+}
+
+
 func (c LoginErrorType) Error() string {
 	return c.Msg
 }
 
 func (c JwtErrorType) Error() string {
+	return c.Msg
+}
+
+func (c TokenErrorType) Error() string {
 	return c.Msg
 }

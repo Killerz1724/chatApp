@@ -11,5 +11,5 @@ type LoginBody struct {
 }
 
 type LoginRes struct {
-	Token string `json:"token"`
+	Token string `json:"access_token"`
 }

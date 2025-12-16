@@ -4,7 +4,7 @@ CREATE TABLE users(
   password VARCHAR(255) NOT NULL,
   username VARCHAR(255) NOT NULL,
   tag VARCHAR(255) NOT NULL,
-  img VARCHAR,
+  img VARCHAR DEFAULT '',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP

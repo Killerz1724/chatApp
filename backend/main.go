@@ -31,10 +31,19 @@ func main() {
 	au := usecase.NewAuthUsecase(ar)
 	ah := handler.NewAuthHandler(au)
 
+	ur := repository.NewUserRepo(db)
+	uu := usecase.NewUserUsecase(ur)
+	uh := handler.NewUserHandler(uu)
+
 	{
 		auth := r.Group("/api/auth")
 		auth.POST("/login", ah.HandlerLogin)
 		auth.POST("/register", ah.HandlerAuthRegister)
+	}
+	{
+		user := r.Group("/api/user")
+		user.Use(middleware.AuthMiddleware())
+		user.GET("/me", uh.HandlerGetUserProfile)
 	}
 
 	srv := &http.Server{

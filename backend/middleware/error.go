@@ -52,7 +52,17 @@ func ErrorMiddleware() gin.HandlerFunc {
 					Data: nil,
 				})
 				return
+			case errors.As(cerr.Msg, &constant.TokenErrorType{}):
+				c.AbortWithStatusJSON(http.StatusBadRequest, dto.Response{
+					Success: false,
+					Error: &dto.ErrorResponse{
+						Message: cerr.Error(),
+					},
+					Data: nil,
+				})
+				return
 			}
+			
 
 			
 		}
