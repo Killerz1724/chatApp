@@ -40,8 +40,9 @@ func (uh UserHandlerImpl) HandlerGetUserProfile(c *gin.Context) {
 
 func (uh UserHandlerImpl) UsecaseGetUserFriends(c *gin.Context){
 	sub := c.GetString("subject")
+	searchParam := c.Query("search")
 
-	reqBody := entity.ReqUserProfileBody{Email: sub}
+	reqBody := entity.ReqUserProfileBody{Email: sub, SearchP: searchParam}
 
 	res, err := uh.uu.UsecaseGetUserFriends(c, reqBody)
 

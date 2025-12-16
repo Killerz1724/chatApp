@@ -1,7 +1,8 @@
 package entity
 
 type ReqUserProfileBody struct {
-	Email string
+	Email   string
+	SearchP string
 }
 
 type ResUserProfile struct {
