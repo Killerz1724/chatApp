@@ -17,6 +17,7 @@ type AuthRepoImpl struct {
 type AuthRepositoryItf interface {
 	RepoAuthLogin(context.Context, entity.LoginBody) (string, error)
 	RepoAuthRegister(context.Context, entity.RegisterBody) error
+
 }
 
 func NewAuthRepo(db *sql.DB) AuthRepoImpl {

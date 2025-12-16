@@ -8,6 +8,7 @@ var (
 	ErrInvalidJWT = errors.New("invalid access")
 	ErrInvalidJWTSubject = errors.New("invalid subject")
 	ErrUserAlreadyExist = errors.New("user already exist")
+	ErrTagAlreadyExist = errors.New("tag already exist")
 )
 
 type LoginErrorType struct {

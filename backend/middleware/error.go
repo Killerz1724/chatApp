@@ -32,7 +32,7 @@ func ErrorMiddleware() gin.HandlerFunc {
 			switch {
 			case errors.As(cerr.Msg, &pgErr):
 				msg := ""
-				if pgErr.Code == "23505" {
+				if pgErr.Code == constant.PgErrUniqueViolation {
 					msg = constant.ErrUserAlreadyExist.Error()
 				}
 				c.AbortWithStatusJSON(http.StatusBadRequest, dto.Response{

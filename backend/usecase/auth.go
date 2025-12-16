@@ -65,14 +65,17 @@ func (ar AuthUsecaseImpl) UsecaseAuthRegister(c context.Context, req entity.Regi
 		return &entity.CustomError{Msg: constant.LoginErrorType{Msg: constant.ErrCommon.Error()}, Log: err}
 	}
 
-	req.Tag = tag
+	req.Tag = "#" + tag
+
 
 	err = ar.ar.RepoAuthRegister(c, req)
 
+	
+
 	if err != nil {
 		return err
-	}
-
+	}	
+	
+	
 	return nil
-
 }
