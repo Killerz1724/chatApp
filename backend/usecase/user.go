@@ -9,6 +9,7 @@ import (
 type UserUsecaseItf interface {
 	UsecaseGetUserProfile(context.Context, entity.ReqUserProfileBody) (*entity.ResUserProfile, error)
 	UsecaseGetUserFriends(context.Context, entity.ReqUserProfileBody) (*[]entity.ResUserFriend, error)
+	UsecaseGetUserDetailFriend(context.Context, entity.ReqUserFriendDetailBody) (*entity.ResUserFriend, error)
 }
 
 type UserUsecaseImpl struct {
@@ -36,5 +37,16 @@ func (uu UserUsecaseImpl) UsecaseGetUserFriends(c context.Context, req entity.Re
 	if err != nil {
 		return nil, err
 	}
+	return res, nil
+}
+
+func (uu UserUsecaseImpl)UsecaseGetUserDetailFriend(c context.Context, req entity.ReqUserFriendDetailBody) (*entity.ResUserFriend, error){
+
+	res, err := uu.ur.RepoGetUserDetailFriend(c, req)
+
+	if err != nil {
+		return nil, err
+	}
+
 	return res, nil
 }

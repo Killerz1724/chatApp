@@ -12,7 +12,13 @@ type ResUserProfile struct {
 	Img      string
 }
 
+type ReqUserFriendDetailBody struct {
+	CurrentUserEmail string
+	Id               int
+}
+
 type ResUserFriend struct {
+	Id       int
 	Username string
 	Tag      string
 	Img      string

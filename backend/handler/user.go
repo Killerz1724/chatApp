@@ -5,6 +5,7 @@ import (
 	"chatApp/entity"
 	"chatApp/usecase"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -59,6 +60,42 @@ func (uh UserHandlerImpl) UsecaseGetUserFriends(c *gin.Context){
 	resBody := dto.ResUserFriend{
 		Friend_list: friendList,
 	}
+
+	c.JSON(http.StatusOK, dto.Response{
+		Success: true,
+		Error:   nil,
+		Data:    resBody,
+	})
+}
+
+func (uh UserHandlerImpl)HandlerGetUserDetailFriend(c *gin.Context){
+
+	sub := c.GetString("subject")
+	id, err := strconv.Atoi(c.Param("id"))
+
+	if err != nil {
+		c.Error(err).SetType(gin.ErrorTypePublic)
+		return
+	}
+
+	reqBody := entity.ReqUserFriendDetailBody{Id: id, CurrentUserEmail: sub}
+
+	res, err := uh.uu.UsecaseGetUserDetailFriend(c, reqBody)
+
+	if err != nil {
+		c.Error(err).SetType(gin.ErrorTypePublic)
+		return
+	}
+
+	if res == nil {
+		c.JSON(http.StatusOK, dto.Response{
+			Success: true,
+			Error:   nil,
+			Data:    nil,
+		})
+		return
+	}
+	resBody := dto.ResUserFriendProf(*res)
 
 	c.JSON(http.StatusOK, dto.Response{
 		Success: true,

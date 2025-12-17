@@ -8,9 +8,10 @@ type ResUserProfile struct {
 }
 
 type ResUserFriendProf struct {
-	Username string `json:"username"`
-	Tag      string `json:"tag"`
-	Img      string `json:"img"`
+	Id       int    `json:"id" omitempty:"true"`
+	Username string `json:"username"  omitempty:"true"`
+	Tag      string `json:"tag" omitempty:"true"`
+	Img      string `json:"img" omitempty:"true"`
 }
 
 type ResUserFriend struct {

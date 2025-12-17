@@ -5,11 +5,13 @@ import (
 	"chatApp/entity"
 	"context"
 	"database/sql"
+	"errors"
 )
 
 type UserRepoItf interface {
 	RepoGetUserProfile(context.Context,entity.ReqUserProfileBody) (*entity.ResUserProfile, error)
 	RepoGetUserFriends(context.Context, entity.ReqUserProfileBody) (*[]entity.ResUserFriend, error)
+	RepoGetUserDetailFriend(context.Context, entity.ReqUserFriendDetailBody) (*entity.ResUserFriend, error)
 }
 
 type UserRepoImpl struct {
@@ -57,7 +59,7 @@ func (ur UserRepoImpl) RepoGetUserFriends(c context.Context, req entity.ReqUserP
 
 	params := []any{userId}
 	q :=`
-		SELECT  u.username, u.tag, u.img
+		SELECT f.friend_id,  u.username, u.tag, u.img
 		FROM users u
 		JOIN friends f
 		ON (
@@ -83,7 +85,7 @@ func (ur UserRepoImpl) RepoGetUserFriends(c context.Context, req entity.ReqUserP
 	var users []entity.ResUserFriend
 	for rows.Next(){
 		var user entity.ResUserFriend
-		err := rows.Scan(&user.Username, &user.Tag, &user.Img)
+		err := rows.Scan(&user.Id, &user.Username, &user.Tag, &user.Img)
 		if err != nil {
 			return nil, &entity.CustomError{Msg: constant.ErrCommon, Log: err}
 		}
@@ -92,3 +94,46 @@ func (ur UserRepoImpl) RepoGetUserFriends(c context.Context, req entity.ReqUserP
 
 	return &users, nil
 }
+
+func (ur UserRepoImpl)RepoGetUserDetailFriend(c context.Context, req entity.ReqUserFriendDetailBody) (*entity.ResUserFriend, error){
+
+	var userId int8
+
+	row := ur.db.QueryRowContext(c, `
+		SELECT id
+		FROM users
+		WHERE email = $1;
+	`, req.CurrentUserEmail)
+
+	err := row.Scan(&userId)
+
+	if err != nil {
+		return nil, &entity.CustomError{Msg: constant.ErrCommon, Log: err}
+	}
+
+	row= ur.db.QueryRowContext(c, `
+	SELECT u.id, u.username, u.tag, u.img
+	FROM friends f
+	JOIN users u
+  ON u.id = CASE
+              WHEN f.user_id = $1 THEN f.friend_id
+              ELSE f.user_id
+            END
+	WHERE u.id = $2
+  AND $1 IN (f.user_id, f.friend_id)
+  AND f.deleted_at IS NULL;
+	`, userId, req.Id)
+
+	var res entity.ResUserFriend
+	err = row.Scan(&res.Id, &res.Username, &res.Tag, &res.Img)
+
+	
+	if errors.Is(err, sql.ErrNoRows) {
+		return nil, nil
+	}
+
+	if err != nil {
+		return nil, &entity.CustomError{Msg: constant.ErrCommon, Log: err}
+	}
+	return &res, nil
+	}

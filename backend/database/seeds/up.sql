@@ -60,12 +60,20 @@ INSERT INTO users(email, password, username, tag)
 VALUES 
   ('user1@mail.com', '$2a$12$EAHF4JtPe/HKq6azH6Q9gedPfH50B2/qwDUEqSAT3nDl0OHeifPCC', 'user1', '#1111'),
   ('user2@mail.com', '$2a$12$EAHF4JtPe/HKq6azH6Q9gedPfH50B2/qwDUEqSAT3nDl0OHeifPCC', 'user2', '#2222'),
-  ('user3@mail.com', '$2a$12$EAHF4JtPe/HKq6azH6Q9gedPfH50B2/qwDUEqSAT3nDl0OHeifPCC', 'user3', '#3333');
+  ('user3@mail.com', '$2a$12$EAHF4JtPe/HKq6azH6Q9gedPfH50B2/qwDUEqSAT3nDl0OHeifPCC', 'user3', '#3333'),
+  ('user4@mail.com', '$2a$12$EAHF4JtPe/HKq6azH6Q9gedPfH50B2/qwDUEqSAT3nDl0OHeifPCC', 'user4', '#4444'),
+  ('user5@mail.com', '$2a$12$EAHF4JtPe/HKq6azH6Q9gedPfH50B2/qwDUEqSAT3nDl0OHeifPCC', 'user5', '#5555'),
+  ('user6@mail.com', '$2a$12$EAHF4JtPe/HKq6azH6Q9gedPfH50B2/qwDUEqSAT3nDl0OHeifPCC', 'user6', '#6666');
 
 INSERT INTO friends(user_id, friend_id)
 VALUES
   (1, 2),
-  (2, 3);
+  (1, 3),
+  (1, 4),
+  (2, 3),
+  (3, 4),
+  (4, 5),
+  (5, 6);
 
 INSERT INTO conversations(name, is_group)
 VALUES
