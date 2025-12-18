@@ -56,6 +56,13 @@ CREATE TABLE messages(
   deleted_at TIMESTAMP
 );
 
+CREATE INDEX idx_messages_convo_created
+ON messages(conversation_id, created_at DESC);
+
+CREATE INDEX idx_cm_user
+ON conversationsMembers(user_id, conversation_id);
+
+
 INSERT INTO users(email, password, username, tag)
 VALUES 
   ('user1@mail.com', '$2a$12$EAHF4JtPe/HKq6azH6Q9gedPfH50B2/qwDUEqSAT3nDl0OHeifPCC', 'user1', '#1111'),
@@ -77,7 +84,7 @@ VALUES
 
 INSERT INTO conversations(name, is_group)
 VALUES
-  ('', true),
+  ('', false),
   ('group2', true);
 
 INSERT INTO conversationsMembers(conversation_id, user_id)

@@ -35,6 +35,10 @@ func main() {
 	uu := usecase.NewUserUsecase(ur)
 	uh := handler.NewUserHandler(uu)
 
+	cr := repository.NewConvRepository(db)
+	cu := usecase.NewConvUsecase(cr)
+	ch := handler.NewConvHandler(cu)
+
 	{
 		auth := r.Group("/api/auth")
 		auth.POST("/login", ah.HandlerLogin)
@@ -47,6 +51,12 @@ func main() {
 		user.GET("/friends", uh.UsecaseGetUserFriends)
 		user.GET("/friends/:id", uh.HandlerGetUserDetailFriend)
 	}
+	{
+		conversations := r.Group("/api/conversations")
+		conversations.Use(middleware.AuthMiddleware())
+		conversations.GET("", ch.HandlerGetListConv)
+	}
+
 
 	srv := &http.Server{
 		Addr:    ":" + os.Getenv("SERVER_PORT"),
